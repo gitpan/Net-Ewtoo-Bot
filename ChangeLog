@@ -1,3 +1,17 @@
+2002-04-20 20:40  jodrell
+
+	* Bot.pm: updated version number to 0.15.
+
+2002-04-20 20:35  jodrell
+
+	* Bot.pm: Removed some extraneous code, added some extra checking
+	with login and logout functions, and fixed the module's behaviour
+	when it fails to connect.
+
+2002-04-20 20:06  jodrell
+
+	* Bot.pm: fixed a couple of typos.
+
 2002-04-17 12:05  jodrell
 
 	* Bot.pm: re-arranged top of file so make test doesn't die. duh.

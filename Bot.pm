@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: Bot.pm,v 1.9 2002/04/17 11:05:41 jodrell Exp $
+# $Id: Bot.pm,v 1.12 2002/04/20 19:40:27 jodrell Exp $
 # Copyright (c) 2002 Gavin Brown. All rights reserved. This program is
 # free software; you can redistribute it and/or modify it under the same
 # terms as Perl itself. 
@@ -10,13 +10,13 @@ use strict;
 
 package Net::Ewtoo::Bot;
 use vars qw($VERSION);
-$VERSION = '0.14';
+$VERSION = '0.15';
 
 =pod
 
 =head1 NAME
 
-New::Ewtoo::Bot - a Ewtoo-compatible talker robot client module
+Net::Ewtoo::Bot - a Ewtoo-compatible talker robot client module
 
 =head1 SYNOPSIS
 
@@ -130,7 +130,7 @@ Reads a single line of input from the talker.
 
 =head1 COPYRIGHT
 
-This module is (c) 2001,2002 Gavin Brown (I<gavin.brown@uk.com>), with additional input and advice from Richard Lawrence (I<richard@custard.org>).
+This module is (c) 2001,2002 Gavin Brown (I<gavin.brown@uk.com>), with additional input and advice from Richard Lawrence (I<richard@fourteenminutes.com>).
 
 This module is licensed under the same terms as Perl itself.
 
@@ -159,18 +159,22 @@ sub login {
 	$socket = IO::Socket::INET->new(	PeerAddr	=> $host,
 						PeerPort	=> $port,
 						Proto		=> 'tcp',
-						Timeout		=> 10 ) or die("$host:$port: $@");
+						Timeout		=> 10 ) or warn("$host:$port: $@") and return undef;
 	print $socket "$user\n$pass\n\n";
-	foreach my $sub(@{$self->{_login_subs}}) {
-		&{$sub}();
+	if (scalar(@{$self->{_login_subs}}) > 0) {
+		foreach my $sub(@{$self->{_login_subs}}) {
+			&{$sub}();
+		}
 	}
 	return;
 }
 
 sub logout {
 	my ($self, $message) = @_;
-	foreach my $sub(sort @{$self->{_logout_subs}}) {
-		&{$sub}();
+	if (scalar(@{$self->{_logout_subs}}) > 0) {
+		foreach my $sub(@{$self->{_logout_subs}}) {
+			&{$sub}();
+		}
 	}
 	if ($message ne '') {
 		print $socket "mquit $message\n";
@@ -178,7 +182,6 @@ sub logout {
 		print $socket "QUIT\n";
 	}
 	close($socket);
-	close ($self->{_logfile});
 	return;
 }
 
@@ -305,6 +308,7 @@ sub _delay {
 	return;
 }
 
+# this kills any ANSI escape characters and colour codes in the supplied string:
 sub _clean_input {
 	my ($self, $str) = @_;
 	$str =~ s/\[(.+?)m//ig;
