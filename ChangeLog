@@ -1,3 +1,12 @@
+2002-04-27 20:25  jodrell
+
+	* Bot.pm: updated version to 0.16.
+
+2002-04-27 20:25  jodrell
+
+	* Bot.pm: fixed another bug - login functions are properly tested
+	for.
+
 2002-04-20 20:40  jodrell
 
 	* Bot.pm: updated version number to 0.15.

@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: Bot.pm,v 1.12 2002/04/20 19:40:27 jodrell Exp $
+# $Id: Bot.pm,v 1.14 2002/04/27 19:25:32 jodrell Exp $
 # Copyright (c) 2002 Gavin Brown. All rights reserved. This program is
 # free software; you can redistribute it and/or modify it under the same
 # terms as Perl itself. 
@@ -10,7 +10,7 @@ use strict;
 
 package Net::Ewtoo::Bot;
 use vars qw($VERSION);
-$VERSION = '0.15';
+$VERSION = '0.16';
 
 =pod
 
@@ -161,7 +161,7 @@ sub login {
 						Proto		=> 'tcp',
 						Timeout		=> 10 ) or warn("$host:$port: $@") and return undef;
 	print $socket "$user\n$pass\n\n";
-	if (scalar(@{$self->{_login_subs}}) > 0) {
+	if (defined($self->{_login_subs}) && scalar(@{$self->{_login_subs}}) > 0) {
 		foreach my $sub(@{$self->{_login_subs}}) {
 			&{$sub}();
 		}
@@ -171,7 +171,7 @@ sub login {
 
 sub logout {
 	my ($self, $message) = @_;
-	if (scalar(@{$self->{_logout_subs}}) > 0) {
+	if (defined($self->{_logout_subs}) && scalar(@{$self->{_logout_subs}}) > 0) {
 		foreach my $sub(@{$self->{_logout_subs}}) {
 			&{$sub}();
 		}
