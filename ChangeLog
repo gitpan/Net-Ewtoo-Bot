@@ -1,3 +1,7 @@
+2002-04-17 12:05  jodrell
+
+	* Bot.pm: re-arranged top of file so make test doesn't die. duh.
+
 2002-04-16 21:09  jodrell
 
 	* Bot.pm, ChangeLog: ChangeLog removed, fixed an error in POD.

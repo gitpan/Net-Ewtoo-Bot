@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: Bot.pm,v 1.8 2002/04/16 20:09:44 jodrell Exp $
+# $Id: Bot.pm,v 1.9 2002/04/17 11:05:41 jodrell Exp $
 # Copyright (c) 2002 Gavin Brown. All rights reserved. This program is
 # free software; you can redistribute it and/or modify it under the same
 # terms as Perl itself. 
@@ -7,10 +7,10 @@
 use IO::Socket;
 use IO::Handle;
 use strict;
-use vars qw($VERSION);
 
 package Net::Ewtoo::Bot;
-$VERSION = '0.13';
+use vars qw($VERSION);
+$VERSION = '0.14';
 
 =pod
 
